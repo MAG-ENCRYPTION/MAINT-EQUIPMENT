@@ -1,0 +1,620 @@
+{% extends "layouts/base.html" %}
+{% load i18n static %}
+
+{% block title %} Tables {% endblock title %}
+
+{% block content %}
+
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">LISTES DES EQUIPEMENTS</h6>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">NOMS</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">CODES</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Localisation</th>
+                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Responsable</th>
+                      <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for equip in equipments %}
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="{% static 'img/team-2.jpg' %}" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{ equip.nomEquipement }}</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">{{ equip.codeEquipement }}</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{ equip.site }}</span>
+                      </td>
+                        <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{ equip.matRespoEntretien.nomTechnicien }}</span>
+                      </td>
+                      <td class="align-middle">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1" >
+                          modifier
+                        </button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"> Supprimer</button>
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Détails de l'equipement</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="details" >
+                                  <img id="modal-photo" src="https://media.istockphoto.com/id/175536857/fr/photo/electric-power-substation.webp?s=2048x2048&w=is&k=20&c=1Y6beF9EOvGfzhb0nl88vXVaiPcfHqzDFGViavLnXSU=" alt=""style="min-width: 5px; min-height: 5px;">
+
+                                </div>
+                                
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Détails de l'equipement</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="details">
+                                  <img id="modal-photo" src="https://media.istockphoto.com/id/175536857/fr/photo/electric-power-substation.webp?s=2048x2048&w=is&k=20&c=1Y6beF9EOvGfzhb0nl88vXVaiPcfHqzDFGViavLnXSU=" alt=""style="width: 460px; height: 350px;">
+                                </div>
+
+                                <form method="post">
+                                  <div class="mb-3">
+                                    <label for="" class="form-label">NOM :</label>
+                                    <input type="text" class="form-control" id="1" name="1" value="{{ equip.nomEquipement }}" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.nom" class="form-label">CODE :</label>
+                                    <input type="text" class="form-control" id="product.nom" name="product.nom" value="{{ equip.codeEquipement }}" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">LOCALISATION :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value=" {{ equip.site }}" readonly>
+                                  </div>
+                                  
+                                </form>
+                                
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter un equipement</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+
+                                <form method="post">
+                                    {% csrf_token %}
+                                  <div class="mb-3">
+                                    <label for="" class="form-label">NOM :</label>
+                                    <input type="text" class="form-control" id="1" name="nomequip" value="" >
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.nom" class="form-label">CODE :</label>
+                                    <input type="text" class="form-control" id="product.nom" name="codeequip" value="" >
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">LOCALISATION :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="localequip" value="" >
+                                  </div>
+                                    <div class="mb-3">
+                                    <label for="product.prix" class="form-label">CODE TECHNICIEN :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="codetech" value="" >
+                                  </div>
+                                  <input type="file" name="" id="" class="file-upload">
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                              </div>
+                                </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div></td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+                <br>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2" >
+                  ajouter
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">LISTES DES PANNES ENREGISTRER</h6>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center justify-content-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">CODE</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">INTITULE</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">CAUSES</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">NATURE</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">ETAT</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">GRAVITER</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="{% static 'img/team-2.jpg' %}" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">535522</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">fuite d'eau</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">Degradation vannes</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">Mecanique</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">non reparee</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">elevee</span>
+                      </td>
+
+                      <td class="align-middle">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalBB" >
+                          modifier
+                        </button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalBA"> Supprimer</button>
+
+                        <div class="modal fade" id="exampleModalBA" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Détails de la panne</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="details" >
+
+                                </div>
+                                
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="modal fade" id="exampleModalBB" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Détails de la panne</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="details">
+                                  <img id="modal-photo" src="https://media.istockphoto.com/id/175536857/fr/photo/electric-power-substation.webp?s=2048x2048&w=is&k=20&c=1Y6beF9EOvGfzhb0nl88vXVaiPcfHqzDFGViavLnXSU=" alt=""style="max-width: 460px; max-height: 350px;">
+                                </div>
+
+                                <form method="post">
+                                  <div class="mb-3">
+                                    <label for="" class="form-label">CODE :</label>
+                                    <input type="text" class="form-control" id="1" name="1" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.nom" class="form-label">INTUTILE :</label>
+                                    <input type="text" class="form-control" id="product.nom" name="product.nom" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">CAUSES :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">NATURE :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">ETAT :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">GRAVITER :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  
+                                </form>
+                                
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="modal fade" id="exampleModalBC" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter un equipement</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+
+                                <form method="post">
+                                  <div class="mb-3">
+                                    <label for="" class="form-label">CODE :</label>
+                                    <input type="text" class="form-control" id="1" name="1" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.nom" class="form-label">INTUTILE :</label>
+                                    <input type="text" class="form-control" id="product.nom" name="product.nom" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">CAUSES :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">NATURE :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">ETAT :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">GRAVITER :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  
+                                </form>
+                                
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="{% static 'img/team-2.jpg' %}" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">798532</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">fuite de gaz</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">Degradation tuyaux</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">Mecanique</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">non reparee</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">elevee</span>
+                      </td>
+
+                      <td class="align-middle">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalBB" >
+                          modifier
+                        </button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalBA"> Supprimer</button>
+
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">PERSONNEL ENREGISTRER</h6>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center justify-content-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">MATRICULE</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">NOM</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">PRENOM</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">FONCTION</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">TELEPHONE</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">EMAIL</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="{% static 'img/team-5.jpg' %}" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">A235522</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">KEUGUE</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">Wilson Brice</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">Ingenieur</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">625665131</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">dodo@gmail.com</span>
+                      </td>
+
+                      <td class="align-middle">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCB" >
+                          modifier
+                        </button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalCA"> Supprimer</button>
+
+                        <div class="modal fade" id="exampleModalCA" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Détails du personnel</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="details" >
+
+                                </div>
+                                
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="modal fade" id="exampleModalCB" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Détails du personnel</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="details">
+                                  <img id="modal-photo" class="border-radius-lg" src="https://media.istockphoto.com/id/175536857/fr/photo/electric-power-substation.webp?s=2048x2048&w=is&k=20&c=1Y6beF9EOvGfzhb0nl88vXVaiPcfHqzDFGViavLnXSU=" alt=""style="max-width: 460px; max-height: 350px;">
+                                </div>
+
+                                <form method="post">
+                                  <div class="mb-4">
+                                    <label for="" class="form-label">MATRICULE :</label>
+                                    <input type="text" class="form-control" id="1" name="1" value="" readonly>
+                                  </div>
+                                  <div class="mb-4">
+                                    <label for="product.nom" class="form-label">NOM :</label>
+                                    <input type="text" class="form-control" id="product.nom" name="product.nom" value="" readonly>
+                                  </div>
+                                  <div class="mb-4">
+                                    <label for="product.prix" class="form-label">PRENOM :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">FONCTION :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">TELEPHONE :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">EMAIL :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  
+                                </form>
+                                
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="modal fade" id="exampleModalCC" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter un equipement</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+
+                                <form method="post">
+                                  <div class="mb-3">
+                                    <label for="" class="form-label">MATRICULE :</label>
+                                    <input type="text" class="form-control" id="1" name="1" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.nom" class="form-label">NOM :</label>
+                                    <input type="text" class="form-control" id="product.nom" name="product.nom" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">PRENOM :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">FONCTION :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">TELEPHONE :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  <div class="mb-3">
+                                    <label for="product.prix" class="form-label">EMAIL :</label>
+                                    <input type="text" class="form-control" id="product.prix" name="product.prix" value="" readonly>
+                                  </div>
+                                  
+                                </form>
+                                
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </td>
+                    </tr>
+                {% for user in users %}
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div>
+                            <img src="{% static 'img/team-2.jpg' %}" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">GR1424</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">{{ user.username }}</p>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{ user.username }} </span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">Ingenieur</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">675665131</span>
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{ user.email}}</span>
+                      </td>
+
+                      <td class="align-middle">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCB" >
+                          modifier
+                        </button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalCA"> Supprimer</button>
+
+                      </td>
+                    </tr>
+                  {% endfor %}
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const buttons = document.querySelectorAll('.btn-primary');
+        const modalPhoto = document.getElementById('modal-photo');
+        
+        buttons.forEach(button => {
+          button.addEventListener('click', () => {
+            const photoUrl = button.dataset.photoUrl;
+            modalPhoto.src = photoUrl;
+          });
+        });
+      </script>
+      {% include 'includes/footer.html' %}
+    </div>
+  </main>
+
+{% endblock content %}
+ 
