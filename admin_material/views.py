@@ -1,9 +1,11 @@
+from django.http import FileResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView, PasswordResetConfirmView
 from admin_material.forms import RegistrationForm, LoginForm, UserPasswordResetForm, UserSetPasswordForm, UserPasswordChangeForm
 from django.contrib.auth import *
 from django.contrib.auth.models import *
 from .models import *
+from core.settings import *
 # Create your views here.
 
 # Pages
@@ -11,8 +13,10 @@ def index(request):
 
   return render(request, 'pages/index.html', { 'segment': 'index' })
 
+
 def billing(request):
-  return render(request, 'pages/billing.html', { 'segment': 'billing' })
+  DRIVE = 'https://docs.google.com/spreadsheets/d/1agQcWA6-90_n7YX1l0OSmKcONpD5-el5/edit?usp=sharing&ouid=113925109231523750690&rtpof=true&sd=true'
+  return render(request, 'pages/billing.html', { 'segment': 'billing','DRIVE':DRIVE })
 
 def tables(request):
   #Pour afficher la liste du personnel
